@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J&D Peters | Canada's Original Tortilla Bakery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
     <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="2Z48U82V2P5H2"></script>
     <style>
         :root {
-            --bg-base: #ece6d9; 
+            --bg-base: #ece6d9;
             --glass-bg: rgba(255, 255, 255, 0.45);
             --glass-border: rgba(255, 255, 255, 0.3);
             --accent-dark: #2d2a26;
@@ -18,7 +21,12 @@
             --blur-val: 18px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
         body {
             background-color: var(--bg-base);
@@ -30,7 +38,8 @@
         /* --- Tightened Header --- */
         header {
             position: absolute;
-            top: 15px; /* Compressed top margin */
+            top: 15px;
+            /* Compressed top margin */
             left: 0;
             width: 100%;
             z-index: 1000;
@@ -62,7 +71,7 @@
             display: flex;
             align-items: center;
             gap: 25px;
-            border-top: 1px solid rgba(0,0,0,0.06);
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
             padding-top: 10px;
             width: 100%;
             justify-content: center;
@@ -76,16 +85,42 @@
         }
 
         .nav-links a {
+            position: relative;
             text-decoration: none;
             color: var(--accent-dark);
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1.5px;
+            bottom: -4px;
+            left: 50%;
+            background-color: #7d6e53;
+            /* Using your brand accent color */
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            color: #7d6e53;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         /* Dropdown */
-        .dropdown { position: relative; }
+        .dropdown {
+            position: relative;
+        }
+
         .dropdown-menu {
             position: absolute;
             top: 100%;
@@ -100,10 +135,21 @@
             opacity: 0;
             visibility: hidden;
             transition: 0.2s;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
         }
-        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-        .dropdown-menu li a { padding: 8px 15px; display: block; text-transform: none; text-align: center; }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .dropdown-menu li a {
+            padding: 8px 15px;
+            display: block;
+            text-transform: none;
+            text-align: center;
+        }
 
         /* --- Compressed Hero Section --- */
         .hero {
@@ -111,7 +157,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 180px 5% 40px; /* Greatly reduced top padding */
+            padding: 180px 5% 40px;
+            /* Greatly reduced top padding */
             gap: 40px;
             max-width: 1300px;
             margin: 0 auto;
@@ -150,7 +197,8 @@
 
         /* --- Enlarged Photo Frame --- */
         .photo-container {
-            flex: 1.2; /* Gives photo more real estate */
+            flex: 1.2;
+            /* Gives photo more real estate */
             display: flex;
             justify-content: center;
         }
@@ -159,14 +207,17 @@
             background: #fff;
             padding: 12px 12px 55px 12px;
             border-radius: 2px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
             transform: rotate(2deg);
             width: 100%;
-            max-width: 550px; /* Much bigger frame */
+            max-width: 550px;
+            /* Much bigger frame */
             transition: transform 0.3s;
         }
 
-        .frame:hover { transform: rotate(0deg) scale(1.02); }
+        .frame:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
 
         .frame img {
             width: 100%;
@@ -182,73 +233,120 @@
             text-decoration: none;
             font-weight: 600;
             display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background: #4a453f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         /* --- Mobile --- */
         @media (max-width: 900px) {
-            .hero { 
-                flex-direction: column-reverse; /* Photo now above text */
-                 /* Reduced top space */
-                text-align: center; 
-                gap: 20px; 
+            .hero {
+                flex-direction: column-reverse;
+                /* Photo now above text */
+                /* Reduced top space */
+                text-align: center;
+                gap: 20px;
             }
-            .story-section { margin-bottom: 40px !important; }
-            .story-section div { padding: 30px 20px !important; border-radius: 20px !important; font-size: 1rem !important; }
-            .nav-links { 
-                display: flex; 
-                flex-wrap: wrap; 
+
+            .story-section {
+                margin-bottom: 40px !important;
+            }
+
+            .story-section div {
+                padding: 30px 20px !important;
+                border-radius: 20px !important;
+                font-size: 1rem !important;
+            }
+
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
                 justify-content: center;
                 gap: 10px;
                 padding-top: 10px;
             }
+
             .nav-links a {
-                font-size: 0.65rem; /* Smaller text for mobile fit */
+                font-size: 0.65rem;
+                /* Smaller text for mobile fit */
             }
-            .logo-container img { height: 70px; }
-            .hero-content { padding: 30px 15px; }
-            .frame { max-width: 90%; margin-bottom: 20px; }
+
+            .logo-container img {
+                height: 70px;
+            }
+
+            .hero-content {
+                padding: 30px 15px;
+            }
+
+            .frame {
+                max-width: 90%;
+                margin-bottom: 20px;
+            }
         }
 
         /* --- Global Announcement Bar --- */
-.promo-banner {
-    background: #7d6e53; /* Matches your 'badge' color for consistency */
-    color: white;
-    text-align: center;
-    padding: 12px 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    position: relative;
-    z-index: 1100; /* Higher than the nav */
-    width: 100%;
-}
+        .promo-banner {
+            background: #7d6e53;
+            /* Matches your 'badge' color for consistency */
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            z-index: 1100;
+            /* Higher than the nav */
+            width: 100%;
+        }
 
-.promo-banner span {
-    color: #ece6d9; /* Subtle contrast for the "FREE SHIPPING" part */
-    font-weight: 400;
-    margin-left: 10px;
-}
+        .promo-banner span {
+            color: #ece6d9;
+            /* Subtle contrast for the "FREE SHIPPING" part */
+            font-weight: 400;
+            margin-left: 10px;
+        }
 
-/* --- Layout Adjustment --- */
-/* Because your header is 'absolute', we need to move it down when the banner is present */
-header {
-    top: 55px !important; /* Adjust this value if the banner height changes */
-}
+        /* --- Layout Adjustment --- */
+        /* Because your header is 'absolute', we need to move it down when the banner is present */
+        header {
+            top: 55px !important;
+            /* Adjust this value if the banner height changes */
+        }
 
-/* Push the main content down further so the banner doesn't cover the title */
-.container, .hero, .map-hero, .contact-container { padding-top: 220px !important; }
+        /* Push the main content down further so the banner doesn't cover the title */
+        .container,
+        .hero,
+        .map-hero,
+        .contact-container {
+            padding-top: 220px !important;
+        }
 
-@media (max-width: 900px) {
-    header { top: 55px !important; }
-    .container, .hero, .map-hero, .contact-container { padding-top: 220px !important; }
-}
+        @media (max-width: 900px) {
+            header {
+                top: 55px !important;
+            }
 
-        
-        
-        
-        
-        
+            .container,
+            .hero,
+            .map-hero,
+            .contact-container {
+                padding-top: 220px !important;
+            }
+        }
+
+
+
+
+
+
         /* Final Mobile Header Base Styles */
         .hamburger {
             display: none;
@@ -260,6 +358,7 @@ header {
             flex-direction: column;
             gap: 5px;
         }
+
         .hamburger span {
             display: block;
             width: 25px;
@@ -279,6 +378,7 @@ header {
                 justify-content: flex-start;
                 padding: 15px 10px !important;
             }
+
             .logo-container {
                 margin-bottom: 0 !important;
                 display: flex;
@@ -287,19 +387,22 @@ header {
                 width: 100%;
                 min-height: 55px;
             }
+
             .logo-container img {
                 height: 55px !important;
                 max-width: 200px;
                 object-fit: contain;
                 margin: 0 !important;
             }
-            .hamburger { 
+
+            .hamburger {
                 display: flex !important;
                 position: absolute !important;
                 right: 12px !important;
                 top: 23px !important;
                 margin: 0 !important;
             }
+
             paypal-cart-button[data-id="pp-view-cart"] {
                 display: block !important;
                 position: absolute !important;
@@ -308,9 +411,17 @@ header {
                 margin: 0 !important;
                 z-index: 1002;
             }
-            .hero, .page-container, .shop-container, .product-detail-container, .map-hero, .contact-container, .container {
+
+            .hero,
+            .page-container,
+            .shop-container,
+            .product-detail-container,
+            .map-hero,
+            .contact-container,
+            .container {
                 padding-top: 120px !important;
             }
+
             .nav-links {
                 display: none !important;
                 flex-direction: column;
@@ -318,16 +429,19 @@ header {
                 text-align: center;
                 padding: 15px 0;
                 gap: 15px !important;
-                border-top: 1px solid rgba(0,0,0,0.06);
+                border-top: 1px solid rgba(0, 0, 0, 0.06);
                 margin-top: 15px;
             }
+
             .nav-links.active {
                 display: flex !important;
             }
+
             .nav-inner {
                 flex-direction: column;
                 width: 100%;
             }
+
             .dropdown-menu {
                 position: static !important;
                 transform: none !important;
@@ -338,23 +452,24 @@ header {
                 padding: 0 !important;
                 display: none;
             }
+
             .dropdown.active .dropdown-menu {
                 display: block;
             }
         }
-
-</style>
+    </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
     <div class="promo-banner">
-    SALE! 20% OFF ALL LUKE'S CHIPS — <span>FREE SHIPPING CANADA WIDE ONLY</span>
-</div>
+        SALE! 20% OFF ALL LUKE'S CHIPS — <span>FREE SHIPPING CANADA WIDE ONLY</span>
+    </div>
 
     <header>
         <div class="glass-nav-wrapper">
             <div class="logo-container">
-            <button class="hamburger"><span></span><span></span><span></span></button>
+                <button class="hamburger"><span></span><span></span><span></span></button>
                 <img src="logotransparent-2.webp" alt="J&D Peters Logo">
             </div>
             <nav class="nav-inner">
@@ -363,7 +478,18 @@ header {
                     <li><a href="products.html">Products</a></li>
                     <li><a href="tallow-products.html">Tallow Products</a></li>
                     <li><a href="where-to-buy.html">Where to Buy</a></li>
-                    <li class="dropdown"><a href="shop.html">Shop</a><ul class="dropdown-menu"><li><a href="dill-pickle-chips.html">Dill Pickle</a></li><li><a href="kale-chips.html">Kale</a></li><li><a href="mexican-spice-chips.html">Mexican Spice</a></li><li><a href="multigrain-chips.html">Multigrain</a></li><li><a href="nacho-cheese-chips.html">Nacho Cheese</a></li><li><a href="sea-salt-chips.html">Sea Salt</a></li><li><a href="tallow-chips.html">Tallow</a></li><li><a href="variety-box.html">Variety Box</a></li></ul></li>
+                    <li class="dropdown"><a href="shop.html">Shop</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="dill-pickle-chips.html">Dill Pickle</a></li>
+                            <li><a href="kale-chips.html">Kale</a></li>
+                            <li><a href="mexican-spice-chips.html">Mexican Spice</a></li>
+                            <li><a href="multigrain-chips.html">Multigrain</a></li>
+                            <li><a href="nacho-cheese-chips.html">Nacho Cheese</a></li>
+                            <li><a href="sea-salt-chips.html">Sea Salt</a></li>
+                            <li><a href="tallow-chips.html">Tallow</a></li>
+                            <li><a href="variety-box.html">Variety Box</a></li>
+                        </ul>
+                    </li>
                     <li><a href="contact-us.html">Contact Us</a></li>
                 </ul>
                 <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
@@ -377,13 +503,18 @@ header {
     <section class="hero">
         <div class="hero-content">
             <h1>Canada’s <span class="cursive">Original</span> <br>Family Owned Tortilla Bakery</h1>
-            <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 25px; max-width: 500px; color: var(--text-main);">Authentic flavors, deep heritage, and zero preservatives. Crafting perfectly authentic tortillas and perfectly crispy chips straight from our family to yours.</p>
+            <p
+                style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 25px; max-width: 500px; color: var(--text-main);">
+                Authentic flavors, deep heritage, and zero preservatives. Crafting perfectly authentic tortillas and
+                perfectly crispy chips straight from our family to yours.</p>
             <a href="shop.html" class="btn">Shop Now</a>
         </div>
 
         <div class="photo-container">
             <div class="frame">
-                <img id="polaroid-slide" src="362611032_744209437513476_7935665175477232372_n (1).jpg" alt="Our Original Tortillas" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: opacity 0.8s ease-in-out;">
+                <img id="polaroid-slide" src="362611032_744209437513476_7935665175477232372_n (1).jpg"
+                    alt="Our Original Tortillas"
+                    style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: opacity 0.8s ease-in-out;">
             </div>
             <script>
                 const slideImages = [
@@ -393,9 +524,9 @@ header {
                 ];
                 let currentSlide = 0;
                 const slideEl = document.getElementById("polaroid-slide");
-                setInterval(function() {
+                setInterval(function () {
                     slideEl.style.opacity = "0";
-                    setTimeout(function() {
+                    setTimeout(function () {
                         currentSlide = (currentSlide + 1) % slideImages.length;
                         slideEl.src = slideImages[currentSlide];
                         slideEl.style.opacity = "1";
@@ -405,30 +536,37 @@ header {
         </div>
     </section>
 
-    <section class="story-section" style="max-width: 900px; margin: 0 auto 100px; padding: 0 5%; text-align: center; position: relative; z-index: 10;">
-        <div style="background: var(--glass-bg); padding: 45px 40px; border-radius: 30px; border: 1px solid var(--glass-border); box-shadow: 0 15px 40px rgba(0,0,0,0.05); backdrop-filter: blur(var(--blur-val)); -webkit-backdrop-filter: blur(var(--blur-val)); font-size: 1.15rem; line-height: 1.8; color: var(--text-main);">
-            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--accent-dark); margin-bottom: 25px;">Grown Local, Proudly Made in <span class="cursive">Ontario!</span></h2>
-            <p style="margin-bottom: 15px;">Our Authentic Mexican Flour Tortillas are made using all-natural ingredients; and are free from preservatives.</p>
-            <p style="margin-bottom: 15px;">We offer 6 different varieties of Flour Tortillas made with certified Organic flour, including the ancient grains Spelt & Kamut.</p>
-            <p>Our Corn Tortillas & Tortilla Chips are made from Non-GMO corn, Organically grown on our farm in Vienna, Ontario.</p>
+    <section class="story-section"
+        style="max-width: 900px; margin: 0 auto 100px; padding: 0 5%; text-align: center; position: relative; z-index: 10;">
+        <div
+            style="background: var(--glass-bg); padding: 45px 40px; border-radius: 30px; border: 1px solid var(--glass-border); box-shadow: 0 15px 40px rgba(0,0,0,0.05); backdrop-filter: blur(var(--blur-val)); -webkit-backdrop-filter: blur(var(--blur-val)); font-size: 1.15rem; line-height: 1.8; color: var(--text-main);">
+            <h2
+                style="font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--accent-dark); margin-bottom: 25px;">
+                Grown Local, Proudly Made in <span class="cursive">Ontario!</span></h2>
+            <p style="margin-bottom: 15px;">Our Authentic Mexican Flour Tortillas are made using all-natural
+                ingredients; and are free from preservatives.</p>
+            <p style="margin-bottom: 15px;">We offer 6 different varieties of Flour Tortillas made with certified
+                Organic flour, including the ancient grains Spelt & Kamut.</p>
+            <p>Our Corn Tortillas & Tortilla Chips are made from Non-GMO corn, Organically grown on our farm in Vienna,
+                Ontario.</p>
         </div>
     </section>
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const hamburger = document.querySelector('.hamburger');
             const navLinks = document.querySelector('.nav-links');
-            
+
             if (hamburger && navLinks) {
-                hamburger.addEventListener('click', function() {
+                hamburger.addEventListener('click', function () {
                     navLinks.classList.toggle('active');
                 });
             }
-            
+
             const dropdowns = document.querySelectorAll('.dropdown');
             dropdowns.forEach(dropdown => {
-                dropdown.addEventListener('click', function(e) {
+                dropdown.addEventListener('click', function (e) {
                     if (window.innerWidth <= 900) {
                         this.classList.toggle('active');
                         e.stopPropagation();
@@ -439,4 +577,5 @@ header {
     </script>
 
 </body>
+
 </html>

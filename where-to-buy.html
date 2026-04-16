@@ -62,9 +62,31 @@
         .nav-links { display: flex; list-style: none; gap: 25px; }
 
         .nav-links a {
-            text-decoration: none; color: var(--accent-dark);
-            font-size: 0.75rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px;
+            position: relative;
+            text-decoration: none;
+            color: var(--accent-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1.5px;
+            bottom: -4px;
+            left: 50%;
+            background-color: #7d6e53; /* Using your brand accent color */
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-links a:hover {
+            color: #7d6e53;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .dropdown { position: relative; }
@@ -237,6 +259,9 @@
                 display: block;
             }
         }
+
+
+        
 
 </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
