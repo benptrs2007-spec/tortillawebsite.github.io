@@ -243,6 +243,32 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--accent-dark);
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+
         /* --- Mobile --- */
         @media (max-width: 900px) {
             .hero {
@@ -282,6 +308,11 @@
 
             .hero-content {
                 padding: 30px 15px;
+            }
+
+            .cta-group {
+                justify-content: center;
+                flex-wrap: wrap;
             }
 
             .frame {
@@ -507,7 +538,10 @@
                 style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 25px; max-width: 500px; color: var(--text-main);">
                 Authentic flavors, deep heritage, and zero preservatives. Crafting perfectly authentic tortillas and
                 perfectly crispy chips straight from our family to yours.</p>
-            <a href="shop.html" class="btn">Shop Now</a>
+            <div class="cta-group">
+                <a href="shop.html" class="btn">Shop Now</a>
+                <a href="where-to-buy.html" class="btn-secondary">Find a Store</a>
+            </div>
         </div>
 
         <div class="photo-container">
