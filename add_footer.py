@@ -6,7 +6,7 @@ footer_html = """
     <footer>
         <div class="footer-content">
             <div class="footer-column">
-                <img src="logotransparent-2.webp" alt="J&D Peters Logo" class="footer-logo">
+                <a href="index.html"><img src="logotransparent-2.webp" alt="J&D Peters Logo" class="footer-logo"></a>
                 <p style="font-size: 0.9rem; line-height: 1.6;">Canada's original family-owned tortilla bakery. Crafting authentic, preservative-free tortillas and chips from our farm to your table.</p>
             </div>
             <div class="footer-column">
