@@ -349,6 +349,143 @@
             }
         }
 
+
+        /* Store List & Accordion Styles */
+        .store-list-container {
+            max-width: 1000px;
+            margin: 60px auto 0;
+            text-align: left;
+        }
+
+        .region-accordion {
+            margin-bottom: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-val));
+            -webkit-backdrop-filter: blur(var(--blur-val));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .region-accordion:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+            border-color: rgba(125, 110, 83, 0.2);
+        }
+
+        .region-header {
+            padding: 24px 35px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent-dark);
+            user-select: none;
+            transition: background 0.3s ease;
+        }
+
+        .region-header:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .region-header::after {
+            content: '+';
+            font-size: 1.8rem;
+            font-weight: 300;
+            transition: transform 0.4s ease;
+            color: #7d6e53;
+        }
+
+        .region-accordion.active .region-header::after {
+            transform: rotate(45deg);
+        }
+
+
+        .region-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease;
+            padding: 0 35px;
+        }
+
+        /* Custom Scrollbar for extended lists */
+        .region-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .region-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        .region-content::-webkit-scrollbar-thumb {
+            background: rgba(125, 110, 83, 0.3);
+            border-radius: 10px;
+        }
+        .region-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(125, 110, 83, 0.5);
+        }
+
+        .region-accordion.active .region-content {
+            max-height: 3000px; /* Large enough for long lists */
+            padding: 0 35px 40px;
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 15px;
+            padding-top: 15px;
+        }
+
+        .store-item {
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .store-item:hover {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: #7d6e53;
+            transform: scale(1.02);
+        }
+
+        .store-name {
+            font-weight: 600;
+            color: var(--accent-dark);
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .store-city {
+            font-size: 0.8rem;
+            color: #7d6e53;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+
+
+
+        @media (max-width: 600px) {
+            .region-header { padding: 20px 25px; font-size: 1.3rem; }
+            .region-content { padding: 0 20px; }
+            .region-accordion.active .region-content { 
+                max-height: 70vh; /* Contained height for better mobile scrolling */
+                overflow-y: auto;
+                padding: 0 20px 30px; 
+            }
+            .store-grid { grid-template-columns: 1fr; }
+        }
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
@@ -397,6 +534,117 @@
 
         <div class="map-container">
             <iframe width="100%" height="100%" frameborder="0" allowfullscreen allow="geolocation" src="https://umap.openstreetmap.de/en/map/product-availability-map_133102?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=undefined&captionBar=false"></iframe>
+        </div>
+
+
+
+        <div class="store-list-container">
+            <div class="region-accordion">
+                <div class="region-header">Ontario</div>
+                <div class="region-content">
+                    <div class="store-grid">
+                        <div class="store-item"><div class="store-name">Sunrise</div><div class="store-city">Aylmer</div></div>
+                        <div class="store-item"><div class="store-name">Mennomex</div><div class="store-city">Aylmer</div></div>
+                        <div class="store-item"><div class="store-name">HB Market</div><div class="store-city">Aylmer</div></div>
+                        <div class="store-item"><div class="store-name">McKechnie Foods</div><div class="store-city">Aylmer</div></div>
+                        <div class="store-item"><div class="store-name">Ryan's NOFRILLS Aylmer</div><div class="store-city">Aylmer</div></div>
+                        <div class="store-item"><div class="store-name">Studer's Variety</div><div class="store-city">Aylmer</div></div>
+                        <div class="store-item"><div class="store-name">Goodness Me!</div><div class="store-city">Barrie</div></div>
+                        <div class="store-item"><div class="store-name">Countryside Farmers Market</div><div class="store-city">Bayham</div></div>
+                        <div class="store-item"><div class="store-name">Kohli's Fresh Mart</div><div class="store-city">Bayham</div></div>
+                        <div class="store-item"><div class="store-name">Pedros Mart Inc.</div><div class="store-city">Bayham</div></div>
+                        <div class="store-item"><div class="store-name">Browndale Farm and Market</div><div class="store-city">Brant County</div></div>
+                        <div class="store-item"><div class="store-name">Chary Picker Country Market</div><div class="store-city">Brant County</div></div>
+                        <div class="store-item"><div class="store-name">Fenwood Farm</div><div class="store-city">Brant County</div></div>
+                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Brantford</div></div>
+                        <div class="store-item"><div class="store-name">50 Pesos Kitchen & Food Truck</div><div class="store-city">Burlington</div></div>
+                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Burlington</div></div>
+                        <div class="store-item"><div class="store-name">Nature's Emporium</div><div class="store-city">Burlington</div></div>
+                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Cambridge</div></div>
+                        <div class="store-item"><div class="store-name">Burkes Produce Market</div><div class="store-city">Central Elgin</div></div>
+                        <div class="store-item"><div class="store-name">Fire Hall Market</div><div class="store-city">Central Elgin</div></div>
+                        <div class="store-item"><div class="store-name">Howe Family Farm Market</div><div class="store-city">Central Elgin</div></div>
+                        <div class="store-item"><div class="store-name">Howe's Farm Market & Country Bakery</div><div class="store-city">Central Elgin</div></div>
+                        <div class="store-item"><div class="store-name">Gerrie's Farm Market Inc</div><div class="store-city">Centre Wellington</div></div>
+                        <div class="store-item"><div class="store-name">Wholesome Pickins Market and Bakery</div><div class="store-city">Delhi</div></div>
+                        <div class="store-item"><div class="store-name">Hope Eco-Farm Store</div><div class="store-city">Elgin County</div></div>
+                        <div class="store-item"><div class="store-name">Mennomex</div><div class="store-city">Elgin County</div></div>
+                        <div class="store-item"><div class="store-name">Clyde's Country Market</div><div class="store-city">Grey Highlands</div></div>
+                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Guelph</div></div>
+                        <div class="store-item"><div class="store-name">Guelph Farmers' Market</div><div class="store-city">Guelph</div></div>
+                        <div class="store-item"><div class="store-name">Market Fresh</div><div class="store-city">Guelph</div></div>
+                        <div class="store-item"><div class="store-name">Richardson's Farm and Market</div><div class="store-city">Haldimand County</div></div>
+                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Hamilton</div></div>
+                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Hamilton</div></div>
+                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Hamilton</div></div>
+                        <div class="store-item"><div class="store-name">Plan B Organic Farms</div><div class="store-city">Hamilton</div></div>
+                        <div class="store-item"><div class="store-name">Fiddleheads Health And Nutrition</div><div class="store-city">Kitchener</div></div>
+                        <div class="store-item"><div class="store-name">Grainharvest Breadhouse Inc</div><div class="store-city">Kitchener</div></div>
+                        <div class="store-item"><div class="store-name">Kitchener Market</div><div class="store-city">Kitchener</div></div>
+                        <div class="store-item"><div class="store-name">Pedros Mart Inc.</div><div class="store-city">Linwood</div></div>
+                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">London</div></div>
+                        <div class="store-item"><div class="store-name">Home Tyme Foodservices</div><div class="store-city">London</div></div>
+                        <div class="store-item"><div class="store-name">On The Move Organics</div><div class="store-city">London</div></div>
+                        <div class="store-item"><div class="store-name">Western Fair District Market</div><div class="store-city">London</div></div>
+                        <div class="store-item"><div class="store-name">Arnold's family farm</div><div class="store-city">Middlesex Centre</div></div>
+                        <div class="store-item"><div class="store-name">Nature's Emporium</div><div class="store-city">Newmarket</div></div>
+                        <div class="store-item"><div class="store-name">Busy Bee Gas & Convenience</div><div class="store-city">Norfolk County</div></div>
+                        <div class="store-item"><div class="store-name">Canamex groceries</div><div class="store-city">Norfolk County</div></div>
+                        <div class="store-item"><div class="store-name">Cider Keg Farm Market</div><div class="store-city">Norfolk County</div></div>
+                        <div class="store-item"><div class="store-name">D & E Family Farm Market</div><div class="store-city">Norfolk County</div></div>
+                        <div class="store-item"><div class="store-name">Fairground General Store</div><div class="store-city">Norfolk County</div></div>
+                        <div class="store-item"><div class="store-name">Liiman's Mercado Mexicano</div><div class="store-city">North Perth</div></div>
+                        <div class="store-item"><div class="store-name">Inside U Wellness</div><div class="store-city">Norwich</div></div>
+                        <div class="store-item"><div class="store-name">Nature's Emporium</div><div class="store-city">Oakville</div></div>
+                        <div class="store-item"><div class="store-name">DeVries Fruit Farm</div><div class="store-city">Pelham</div></div>
+                        <div class="store-item"><div class="store-name">La Tienda Mexican Grocer & Take-Out</div><div class="store-city">Perth East</div></div>
+                        <div class="store-item"><div class="store-name">Zehr's Country Market</div><div class="store-city">Perth East</div></div>
+                        <div class="store-item"><div class="store-name">Bre's Fresh Market</div><div class="store-city">South-West Oxford</div></div>
+                        <div class="store-item"><div class="store-name">Common Ground Market Farm and CSA</div><div class="store-city">Southwold</div></div>
+                        <div class="store-item"><div class="store-name">The Peanut Mill Natural Foods Market</div><div class="store-city">St. Catharines</div></div>
+                        <div class="store-item"><div class="store-name">Briwood Farm Market Inc</div><div class="store-city">St. Thomas</div></div>
+                        <div class="store-item"><div class="store-name">The Wild Hog Country Market</div><div class="store-city">Stratford</div></div>
+                        <div class="store-item"><div class="store-name">Small Scale Farms</div><div class="store-city">Thorold</div></div>
+                        <div class="store-item"><div class="store-name">Rinconcito Mexican Grocery</div><div class="store-city">Tillsonburg</div></div>
+                        <div class="store-item"><div class="store-name">4life Natural Foods</div><div class="store-city">Toronto</div></div>
+                        <div class="store-item"><div class="store-name">Fresh From The Farm (Schmucker's)</div><div class="store-city">Toronto</div></div>
+                        <div class="store-item"><div class="store-name">Nature's Emporium</div><div class="store-city">Toronto</div></div>
+                        <div class="store-item"><div class="store-name">Nature's Emporium</div><div class="store-city">Vaughan</div></div>
+                        <div class="store-item"><div class="store-name">Nature's Emporium</div><div class="store-city">Vaughan</div></div>
+                        <div class="store-item"><div class="store-name">Granite Ridge Country Market</div><div class="store-city">Verner</div></div>
+                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Waterloo</div></div>
+                        <div class="store-item"><div class="store-name">Vincenzo's</div><div class="store-city">Waterloo</div></div>
+                        <div class="store-item"><div class="store-name">Wild Meadows Farm</div><div class="store-city">West Grey</div></div>
+                        <div class="store-item"><div class="store-name">Éowyn's - The Littlest Ice Cream Shop</div><div class="store-city">West Grey</div></div>
+                        <div class="store-item"><div class="store-name">Herrle's Country Farm Market</div><div class="store-city">Wilmot</div></div>
+                        <div class="store-item"><div class="store-name">Pfenning's Organic & More</div><div class="store-city">Wilmot</div></div>
+                        <div class="store-item"><div class="store-name">The Sustainable Market & Brookfront Farms</div><div class="store-city">Wilmot</div></div>
+                        <div class="store-item"><div class="store-name">Inside U Wellness</div><div class="store-city">Woodstock</div></div>
+                        <div class="store-item"><div class="store-name">Woodstock Farmers Market</div><div class="store-city">Woodstock</div></div>
+                        <div class="store-item"><div class="store-name">Your Farm Market - Woodstock</div><div class="store-city">Woodstock</div></div>
+                        <div class="store-item"><div class="store-name">Your Farm Market - Woodstock</div><div class="store-city">Woodstock</div></div>
+                        <div class="store-item"><div class="store-name">Turners Farm Market</div><div class="store-city">Zorra</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="region-accordion">
+                <div class="region-header">Alberta</div>
+                <div class="region-content">
+                    <div class="store-grid">
+                        <div class="store-item"><div class="store-name">Amaranth Foods - Southland Market</div><div class="store-city">Calgary</div></div>
+                        <div class="store-item"><div class="store-name">Amaranth Health - Supplement Boutique</div><div class="store-city">Calgary</div></div>
+                        <div class="store-item"><div class="store-name">Amaranth Whole Foods Market - Arbour Lake Market</div><div class="store-city">Calgary</div></div>
+                        <div class="store-item"><div class="store-name">Community Natural Foods</div><div class="store-city">Calgary</div></div>
+                        <div class="store-item"><div class="store-name">Community Natural Foods</div><div class="store-city">Calgary</div></div>
+                        <div class="store-item"><div class="store-name">Community Natural Foods</div><div class="store-city">Calgary</div></div>
+                        <div class="store-item"><div class="store-name">Community Natural Foods</div><div class="store-city">Calgary</div></div>
+                        <div class="store-item"><div class="store-name">Community Natural Foods</div><div class="store-city">Edmonton</div></div>
+                        <div class="store-item"><div class="store-name">Okotoks Natural Foods</div><div class="store-city">Okotoks</div></div>
+                        <div class="store-item"><div class="store-name">Amaranth Foods - Enjoy Centre Market</div><div class="store-city">St. Albert</div></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <footer>
@@ -455,6 +703,16 @@
                         this.classList.toggle('active');
                         e.stopPropagation();
                     }
+                });
+            });
+
+
+            // Accordion Logic
+            const accordions = document.querySelectorAll('.region-header');
+            accordions.forEach(header => {
+                header.addEventListener('click', function() {
+                    const accordion = this.parentElement;
+                    accordion.classList.toggle('active');
                 });
             });
         });
