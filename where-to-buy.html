@@ -21,10 +21,26 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
         body {
-            background-color: var(--bg-base);
+            background: radial-gradient(circle at top, #f6f3eb 0%, #ece6d9 100%);
+            background-attachment: fixed;
             color: var(--text-main);
-            line-height: 1.4;
+            line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ece6d9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c5b9a5;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7d6e53;
         }
 
         header {
@@ -584,10 +600,81 @@
             color: #888;
             font-style: italic;
         }
+    
+        /* Glowing background blobs */
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(235, 172, 120, 0.12) 0%, rgba(235, 172, 120, 0) 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+            animation: floatBlob 25s infinite alternate ease-in-out;
+        }
+        .blob-1 {
+            top: 10%;
+            left: -100px;
+        }
+        .blob-2 {
+            top: 50%;
+            right: -100px;
+            background: radial-gradient(circle, rgba(125, 110, 83, 0.12) 0%, rgba(125, 110, 83, 0) 70%);
+            animation-delay: -12s;
+        }
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 30px) scale(1.05); }
+        }
+        @media (max-width: 900px) {
+            .blob {
+                display: none; /* Hide blobs on mobile to prevent overflow/scrolling issues */
+            }
+        }
+
+        /* Mobile Menu Panel */
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none !important;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                padding: 20px !important;
+                gap: 15px !important;
+                border-top: 1px solid rgba(0,0,0,0.06);
+                margin-top: 15px;
+                background: rgba(255, 255, 255, 0.92);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                border-radius: 18px;
+                box-shadow: 0 10px 30px rgba(125, 110, 83, 0.12);
+                border: 1px solid rgba(255, 255, 255, 0.4);
+            }
+            .nav-links.active {
+                display: flex !important;
+            
+        }
+        }
+
+        /* Scroll Reveal Base Styles */
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
     <div class="promo-banner">
         SALE! 20% OFF ALL LUKE'S CHIPS — <span>FREE SHIPPING CANADA WIDE ONLY</span>
     </div>
@@ -658,10 +745,8 @@
                         <div class="store-item"><div class="store-name">Mennomex</div><div class="store-city">Aylmer</div></div>
                         <div class="store-item"><div class="store-name">HB Market</div><div class="store-city">Aylmer</div></div>
                         <div class="store-item"><div class="store-name">McKechnie Foods</div><div class="store-city">Aylmer</div></div>
-                        <div class="store-item"><div class="store-name">Ryan's NOFRILLS Aylmer</div><div class="store-city">Aylmer</div></div>
                         <div class="store-item"><div class="store-name">Studer's Variety</div><div class="store-city">Aylmer</div></div>
                         <div class="store-item"><div class="store-name">Goodness Me!</div><div class="store-city">Barrie</div></div>
-                        <div class="store-item"><div class="store-name">Countryside Farmers Market</div><div class="store-city">Bayham</div></div>
                         <div class="store-item"><div class="store-name">Kohli's Fresh Mart</div><div class="store-city">Bayham</div></div>
                         <div class="store-item"><div class="store-name">Pedros Mart Inc.</div><div class="store-city">Bayham</div></div>
                         <div class="store-item"><div class="store-name">Browndale Farm and Market</div><div class="store-city">Brant County</div></div>
@@ -671,9 +756,7 @@
                         <div class="store-item"><div class="store-name">50 Pesos Kitchen & Food Truck</div><div class="store-city">Burlington</div></div>
                         <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Burlington</div></div>
                         <div class="store-item"><div class="store-name">Nature's Emporium</div><div class="store-city">Burlington</div></div>
-                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Cambridge</div></div>
                         <div class="store-item"><div class="store-name">Burkes Produce Market</div><div class="store-city">Central Elgin</div></div>
-                        <div class="store-item"><div class="store-name">Fire Hall Market</div><div class="store-city">Central Elgin</div></div>
                         <div class="store-item"><div class="store-name">Howe Family Farm Market</div><div class="store-city">Central Elgin</div></div>
                         <div class="store-item"><div class="store-name">Howe's Farm Market & Country Bakery</div><div class="store-city">Central Elgin</div></div>
                         <div class="store-item"><div class="store-name">Gerrie's Farm Market Inc</div><div class="store-city">Centre Wellington</div></div>
@@ -693,9 +776,6 @@
                         <div class="store-item"><div class="store-name">Grainharvest Breadhouse Inc</div><div class="store-city">Kitchener</div></div>
                         <div class="store-item"><div class="store-name">Kitchener Market</div><div class="store-city">Kitchener</div></div>
                         <div class="store-item"><div class="store-name">Pedros Mart Inc.</div><div class="store-city">Linwood</div></div>
-                        <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">London</div></div>
-                        <div class="store-item"><div class="store-name">Home Tyme Foodservices</div><div class="store-city">London</div></div>
-                        <div class="store-item"><div class="store-name">On The Move Organics</div><div class="store-city">London</div></div>
                         <div class="store-item"><div class="store-name">Western Fair District Market</div><div class="store-city">London</div></div>
                         <div class="store-item"><div class="store-name">Arnold's family farm</div><div class="store-city">Middlesex Centre</div></div>
                         <div class="store-item"><div class="store-name">Nature's Emporium</div><div class="store-city">Newmarket</div></div>
@@ -726,7 +806,6 @@
                         <div class="store-item"><div class="store-name">Goodness Me! Natural Food Market</div><div class="store-city">Waterloo</div></div>
                         <div class="store-item"><div class="store-name">Vincenzo's</div><div class="store-city">Waterloo</div></div>
                         <div class="store-item"><div class="store-name">Wild Meadows Farm</div><div class="store-city">West Grey</div></div>
-                        <div class="store-item"><div class="store-name">Éowyn's - The Littlest Ice Cream Shop</div><div class="store-city">West Grey</div></div>
                         <div class="store-item"><div class="store-name">Herrle's Country Farm Market</div><div class="store-city">Wilmot</div></div>
                         <div class="store-item"><div class="store-name">Pfenning's Organic & More</div><div class="store-city">Wilmot</div></div>
                         <div class="store-item"><div class="store-name">The Sustainable Market & Brookfront Farms</div><div class="store-city">Wilmot</div></div>
@@ -798,6 +877,50 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Dynamically assign reveal classes and calculate staggered grid delays
+            const revealSelectors = [
+                '.hero-content',
+                '.photo-container',
+                '.story-section > div',
+                '.page-title',
+                '.section-title',
+                '.map-container',
+                '.contact-container',
+                '.product-card',
+                '.store-item',
+                '.ingredients-box',
+                '.product-image-wrapper',
+                '.product-info'
+            ];
+            revealSelectors.forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach((el, index) => {
+                    el.classList.add('reveal');
+                    
+                    // Stagger grid item delays dynamically
+                    if (el.classList.contains('product-card') || el.classList.contains('store-item')) {
+                        el.style.transitionDelay = `${(index % 4) * 0.08}s`;
+                    }
+                });
+            });
+
+            // Intersection Observer for scroll-reveal triggering
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.05,
+                rootMargin: "0px 0px -40px 0px"
+            });
+            reveals.forEach(el => observer.observe(el));
+
+
+    
             const hamburger = document.querySelector('.hamburger');
             const navLinks = document.querySelector('.nav-links');
             
