@@ -887,7 +887,6 @@
                 '.map-container',
                 '.contact-container',
                 '.product-card',
-                '.store-item',
                 '.ingredients-box',
                 '.product-image-wrapper',
                 '.product-info'
@@ -1088,6 +1087,8 @@
 
                 resultsGrid.innerHTML = '';
                 topStores.forEach(store => {
+                    store.element.classList.remove('reveal');
+                    store.element.classList.add('visible');
                     const distTag = document.createElement('div');
                     distTag.className = 'distance-tag';
                     distTag.textContent = `${store.distance.toFixed(1)} km away`;
@@ -1117,6 +1118,8 @@
 
                 resultsGrid.innerHTML = '';
                 matches.slice(0, 12).forEach(match => {
+                    match.element.classList.remove('reveal');
+                    match.element.classList.add('visible');
                     resultsGrid.appendChild(match.element);
                 });
 
