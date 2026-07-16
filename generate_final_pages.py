@@ -315,7 +315,7 @@ tortillas = [
 ]
 
 chips = [
-    {"name": "Tallow Fried Tortilla Chips", "img": "tallow-chip.webp", "link": "tallow-chips.html"},
+    {"name": "Tallow Fried Tortilla Chips", "img": "newtallowchipbag.png", "link": "tallow-chips.html"},
     {"name": "Sea Salt Tortilla Chips", "img": "sea-salt-chip.webp", "link": "sea-salt-chips.html"},
     {"name": "Mexican Spice Tortilla Chips", "img": "mexican-spice-chip.webp", "link": "mexican-spice-chips.html"},
     {"name": "Nacho Cheese Tortilla Chips", "img": "nachocheese.webp", "link": "nacho-cheese-chips.html"},
@@ -376,7 +376,7 @@ tallow_html = banner_header.format(title="Tallow Products", custom_css=tallow_cs
 
 tallow_html += f"""
             <div class="product-card">
-                <img src="tallow-chip.webp" alt="Tallow Fried Tortilla Chips" class="product-image">
+                <img src="newtallowchipbag.png" alt="Tallow Fried Tortilla Chips" class="product-image">
                 <h3 class="product-title">Tallow Fried Tortilla Chips</h3>
                 <a href="tallow-chips.html" class="btn-details">More Details</a>
             </div>

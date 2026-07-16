@@ -39,7 +39,7 @@ products = [
     },
     {
         "file": "tallow-chips.html",
-        "image": "tallow-chip.webp",
+        "image": "newtallowchipbag.png",
         "id": "8B7U4DRKB9ZJG",
         "name": "Tallow Fried Tortilla Chips"
     }

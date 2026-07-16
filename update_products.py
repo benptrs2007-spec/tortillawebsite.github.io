@@ -19,7 +19,7 @@ with open("tallow-products.html", "r", encoding="utf-8") as f:
 
 new_tallow_cards = """
             <div class="product-card">
-                <img src="tallow-chip.webp" alt="Tallow Fried Tortilla Chips" class="product-image">
+                <img src="newtallowchipbag.png" alt="Tallow Fried Tortilla Chips" class="product-image">
                 <h3 class="product-title">Tallow Fried Tortilla Chips</h3>
                 <a href="tallow-chips.html" class="btn-details">More Details</a>
             </div>
