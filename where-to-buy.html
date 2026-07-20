@@ -723,10 +723,10 @@
 
         <div class="search-container">
             <div class="search-box">
-                <input type="text" id="postal-search" placeholder="Enter Canadian Postal Code (e.g. N5V) or City...">
+                <input type="text" id="postal-search" placeholder="Enter Postal Code (e.g. N3Y 2E5) or City (e.g. Simcoe)...">
                 <button class="search-btn" id="search-btn">Find Stores</button>
             </div>
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">Enter first 3 characters of your postal code for the best results.</p>
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">Search by city name or Canadian postal code to find stores closest to you.</p>
         </div>
 
         <div id="nearby-results" class="store-list-container">
@@ -982,6 +982,7 @@
                 'Okotoks': [50.73, -113.98],
                 'Pelham': [43.03, -79.3],
                 'Perth East': [43.47, -80.95],
+                'Simcoe': [42.8372, -80.3039],
                 'South-West Oxford': [42.97, -80.81],
                 'Southwold': [42.75, -81.31],
                 'St. Albert': [53.63, -113.63],
@@ -1021,51 +1022,157 @@
 
             function deg2rad(deg) { return deg * (Math.PI/180); }
 
+            // Helper to match local city coordinates directly
+            function getLocalCityCoords(query) {
+                const clean = query.trim().toLowerCase();
+                const cityPart = clean.split(',')[0].trim();
+                
+                for (const [city, coords] of Object.entries(cityCoords)) {
+                    const cityLower = city.toLowerCase();
+                    if (clean === cityLower || cityPart === cityLower) {
+                        return coords;
+                    }
+                }
+                return null;
+            }
+
+            // Helper to check if a query matches any store name or city in the HTML
+            function queryMatchesStoreOrCityInHtml(query) {
+                const upperQuery = query.toUpperCase().trim();
+                let found = false;
+                document.querySelectorAll('.store-item').forEach(item => {
+                    const name = item.querySelector('.store-name').textContent.toUpperCase();
+                    const city = item.querySelector('.store-city').textContent.toUpperCase();
+                    if (name.includes(upperQuery) || city.includes(upperQuery)) {
+                        found = true;
+                    }
+                });
+                return found;
+            }
+
             async function performSearch() {
-                let query = searchInput.value.trim().toUpperCase();
-                if (!query) return;
+                const rawQuery = searchInput.value.trim();
+                if (!rawQuery) return;
 
                 resultsGrid.innerHTML = '<div class="no-results">Searching...</div>';
                 resultsSection.style.display = 'block';
-                locationSpan.textContent = query;
+                locationSpan.textContent = rawQuery;
 
-                // 1. Try Nominatim for high-accuracy full postal code first
-                try {
-                    const osmQuery = `${query}, Canada`;
-                    const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(osmQuery)}&format=json&limit=1`);
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data && data.length > 0) {
-                            const userLat = parseFloat(data[0].lat);
-                            const userLng = parseFloat(data[0].lon);
-                            findClosestStores(userLat, userLng);
-                            return; // Success!
+                // Clean postal code format (strip spaces and hyphens)
+                const cleanQuery = rawQuery.replace(/[\s-]/g, '').toUpperCase();
+                const isPostalCode = /^[A-Z]\d[A-Z]/.test(cleanQuery);
+
+                if (isPostalCode) {
+                    const fsa = cleanQuery.substring(0, 3);
+
+                    // 1. If a full postal code (6 chars) was entered, try Nominatim with countrycodes=ca first.
+                    //    This gives precise results (e.g. N0J 1Z0 => Bayham, not the broad N0J centroid)
+                    if (cleanQuery.length >= 6) {
+                        try {
+                            const formattedPC = encodeURIComponent(cleanQuery.substring(0, 3) + ' ' + cleanQuery.substring(3, 6));
+                            const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${formattedPC}&countrycodes=ca&format=json&limit=3`);
+                            if (response.ok) {
+                                const data = await response.json();
+                                if (data && data.length > 0) {
+                                    let bestResult = data[0];
+                                    const nonCounty = data.find(item => {
+                                        const addrType = (item.addresstype || '').toLowerCase();
+                                        const name = (item.name || '').toLowerCase();
+                                        return addrType !== 'county' && !name.includes('county');
+                                    });
+                                    if (nonCounty) bestResult = nonCounty;
+                                    findClosestStores(parseFloat(bestResult.lat), parseFloat(bestResult.lon));
+                                    return;
+                                }
+                            }
+                        } catch (error) {
+                            console.error("Nominatim full postal error:", error);
                         }
                     }
-                } catch (error) {
-                    console.error("Nominatim error:", error);
-                }
 
-                // 2. Fallback to FSA-based search if it looks like a postal code
-                const postalRegex = /^[A-Z]\d[A-Z]/;
-                if (postalRegex.test(query)) {
-                    const fsa = query.substring(0, 3);
+                    // 2. FSA-only (3 chars): Zippopotam for Canadian FSA centroid
                     try {
                         const response = await fetch(`https://api.zippopotam.us/ca/${fsa}`);
                         if (response.ok) {
                             const data = await response.json();
-                            const userLat = parseFloat(data.places[0].latitude);
-                            const userLng = parseFloat(data.places[0].longitude);
-                            findClosestStores(userLat, userLng);
-                        } else {
-                            resultsGrid.innerHTML = '<div class="no-results">Postal code not found. Try entering just the first 3 characters.</div>';
+                            if (data && data.places && data.places.length > 0) {
+                                findClosestStores(parseFloat(data.places[0].latitude), parseFloat(data.places[0].longitude));
+                                return;
+                            }
                         }
                     } catch (error) {
-                        resultsGrid.innerHTML = '<div class="no-results">Error connecting to location service.</div>';
+                        console.error("Zippopotam error:", error);
                     }
+
+                    // 3. Last fallback: Nominatim FSA with countrycodes=ca
+                    try {
+                        const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(fsa)}&countrycodes=ca&format=json&limit=3`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data && data.length > 0) {
+                                let bestResult = data[0];
+                                const nonCounty = data.find(item => {
+                                    const addrType = (item.addresstype || '').toLowerCase();
+                                    const name = (item.name || '').toLowerCase();
+                                    return addrType !== 'county' && !name.includes('county');
+                                });
+                                if (nonCounty) bestResult = nonCounty;
+                                findClosestStores(parseFloat(bestResult.lat), parseFloat(bestResult.lon));
+                                return;
+                            }
+                        }
+                    } catch (error) {
+                        console.error("Nominatim FSA fallback error:", error);
+                    }
+
+                    resultsGrid.innerHTML = '<div class="no-results">Postal code not found. Please verify and try again.</div>';
                 } else {
-                    // Text search (City or Name)
-                    filterStoresByText(query);
+                    // Text search (City or Store Name)
+
+                    // 1. Try direct/local city matching from our coordinate dictionary
+                    const localCoords = getLocalCityCoords(rawQuery);
+                    if (localCoords) {
+                        findClosestStores(localCoords[0], localCoords[1]);
+                        return;
+                    }
+
+                    // 2. Try simple text match in the store list HTML
+                    if (queryMatchesStoreOrCityInHtml(rawQuery)) {
+                        filterStoresByText(rawQuery);
+                        return;
+                    }
+
+                    // 3. Nominatim city geocoding — MUST use countrycodes=ca (not ", Canada" suffix).
+                    //    The suffix approach can match non-place results before the actual place.
+                    //    e.g. "Vienna, Canada" matched a Guelph street address before Vienna village, ON.
+                    try {
+                        const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(rawQuery)}&countrycodes=ca&format=json&limit=5`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data && data.length > 0) {
+                                let bestResult = data[0];
+                                const queryLower = rawQuery.toLowerCase();
+                                const isCountySearch = queryLower.includes('county');
+
+                                if (!isCountySearch) {
+                                    const nonCounty = data.find(item => {
+                                        const addrType = (item.addresstype || '').toLowerCase();
+                                        const name = (item.name || '').toLowerCase();
+                                        return addrType !== 'county' && !name.includes('county');
+                                    });
+                                    if (nonCounty) bestResult = nonCounty;
+                                }
+
+                                findClosestStores(parseFloat(bestResult.lat), parseFloat(bestResult.lon));
+                                return;
+                            }
+                        }
+                    } catch (error) {
+                        console.error("Nominatim city error:", error);
+                    }
+
+                    // 4. Final fallback to text filtering
+                    filterStoresByText(rawQuery);
                 }
             }
 
