@@ -665,6 +665,131 @@
         }
         }
 
+        /* --- Recipe Spotlight (Made With Our Tortillas) --- */
+        .spotlight-section {
+            max-width: 1100px;
+            margin: 0 auto 100px;
+            padding: 0 5%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .spotlight-card {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-val));
+            -webkit-backdrop-filter: blur(var(--blur-val));
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 50px 60px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .spotlight-media {
+            flex: 0 0 300px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .spotlight-frame {
+            position: relative;
+            background: #fff;
+            padding: 12px 12px 92px 12px;
+            border-radius: 2px;
+            box-shadow: 0 15px 40px rgba(125, 110, 83, 0.22);
+            transform: rotate(-2.5deg);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .spotlight-frame:hover {
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 0 25px 55px rgba(125, 110, 83, 0.32);
+        }
+
+        .spotlight-frame img {
+            width: 100%;
+            display: block;
+            aspect-ratio: 9 / 16;
+            object-fit: cover;
+            border-radius: 1px;
+        }
+
+        .polaroid-caption {
+            position: absolute;
+            bottom: 18px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.15rem;
+            line-height: 1.25;
+            color: #6b5d49;
+            letter-spacing: 0.5px;
+        }
+
+        .spotlight-text {
+            flex: 1;
+        }
+
+        .spotlight-text .spotlight-tag {
+            display: inline-block;
+            background: rgba(125, 110, 83, 0.12);
+            color: #7d6e53;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 6px 16px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+        }
+
+        .spotlight-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            line-height: 1.15;
+            color: var(--accent-dark);
+            margin-bottom: 18px;
+        }
+
+        .spotlight-text p {
+            font-size: 1.02rem;
+            line-height: 1.75;
+            color: var(--text-main);
+            max-width: 480px;
+            margin-bottom: 28px;
+        }
+
+        .spotlight-text .btn {
+            padding: 13px 32px;
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 900px) {
+            .spotlight-card {
+                flex-direction: column;
+                gap: 35px;
+                padding: 35px 22px;
+                text-align: center;
+            }
+
+            .spotlight-media {
+                flex-basis: auto;
+                width: 100%;
+            }
+
+            .spotlight-frame {
+                max-width: 260px;
+            }
+
+            .spotlight-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
         /* Scroll Reveal Base Styles */
         .reveal {
             opacity: 0;
@@ -776,6 +901,26 @@
                 Ontario.</p>
         </div>
     </section>
+
+    <section class="spotlight-section">
+        <div class="spotlight-card">
+            <div class="spotlight-media">
+                <div class="spotlight-frame">
+                    <img src="tortilladish.webp"
+                        alt="Breakfast tacos made with J&D Peters flour tortillas, filled with scrambled eggs, sour cream and salsa">
+                    <p class="polaroid-caption">breakfast tacos, made with our tortillas</p>
+                </div>
+            </div>
+            <div class="spotlight-text">
+                <span class="spotlight-tag">Made With Our Tortillas</span>
+                <h2>Turn our tortillas into <span class="cursive">something amazing</span></h2>
+                <p>Farm-fresh scrambled eggs, creamy sour cream and a kick of salsa — folded into our soft flour
+                    tortillas for the perfect breakfast taco. However you roll, wrap or fold them, our tortillas are
+                    made to be the heart of your table.</p>
+                <a href="products.html" class="btn">Explore Our Tortillas</a>
+            </div>
+        </div>
+    </section>
     <footer>
         <div class="footer-content">
             <div class="footer-column">
@@ -830,7 +975,8 @@
                 '.store-item',
                 '.ingredients-box',
                 '.product-image-wrapper',
-                '.product-info'
+                '.product-info',
+                '.spotlight-card'
             ];
             revealSelectors.forEach(selector => {
                 const elements = document.querySelectorAll(selector);
