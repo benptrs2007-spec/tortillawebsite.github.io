@@ -162,11 +162,17 @@
             flex-direction: column;
         }
 
-        .map-container iframe {
+        .map-container iframe,
+        #availability-map {
             width: 100%;
             flex-grow: 1;
             border: none;
             border-radius: 16px;
+        }
+
+        #availability-map {
+            min-height: 420px;
+            z-index: 1;
         }
 
         @media (max-width: 900px) {
@@ -179,7 +185,8 @@
 
         @media (max-width: 480px) {
             .map-container { height: 420px; padding: 14px; }
-            .map-container iframe { border-radius: 12px; }
+            .map-container iframe,
+            #availability-map { border-radius: 12px; }
         }
 
         
@@ -699,6 +706,7 @@
         }
     
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
@@ -747,7 +755,7 @@
         <p>Find our authentic tortillas and artisan chips at a retailer near you.</p>
 
         <div class="map-container">
-            <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1MCzQrUFrmVIoUverxSb6BjF0YN9bED0&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <div id="availability-map" aria-label="Map of store locations"></div>
         </div>
 
         <div class="search-container">
@@ -1283,6 +1291,147 @@
             searchInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') performSearch();
             });
+        });
+    </script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script>
+        // Leaflet store-location map (migrated from Google My Maps via KML export).
+        // Each entry: [store name, latitude, longitude]
+        document.addEventListener('DOMContentLoaded', function () {
+            var mapEl = document.getElementById('availability-map');
+            if (!mapEl || typeof L === 'undefined') return;
+
+            var pins = [
+                ['Goodness Me! Natural Food Market', 43.4468565, -80.5751135],
+                ['Goodness Me! Natural Food Market', 43.028484, -81.2842242],
+                ['Goodness Me! Natural Food Market', 43.5394096, -80.2449031],
+                ['Goodness Me! Natural Food Market', 43.1706027, -80.2471168],
+                ["Kohli's Fresh Mart", 42.7490243, -80.7784517],
+                ["Ryan's NOFRILLS Aylmer", 42.785275, -80.982056],
+                ["Bre's Fresh Market", 42.904096, -80.757732],
+                ['DeVries Fruit Farm', 43.0243967, -79.364287],
+                ['On The Move Organics', 42.9974, -81.2169],
+                ["Richardson's Farm and Market", 42.9180916, -79.6947595],
+                ['Goodness Me! Natural Food Market', 43.2557784, -79.8856265],
+                ['Goodness Me! Natural Food Market', 43.2134285, -79.8461052],
+                ['Goodness Me! Natural Food Market', 43.3426734, -79.8029987],
+                ['Goodness Me! Natural Food Market', 43.3333195, -79.8977553],
+                ['Canamex groceries', 42.73119, -80.67386],
+                ['Mennomex', 42.7640486, -80.9586546],
+                ['Mennomex', 42.7918673, -80.9827556],
+                ['Plan B Organic Farms', 43.3157798, -80.0830686],
+                ["Gerrie's Farm Market Inc", 43.69463, -80.4159006],
+                ['Briwood Farm Market Inc', 42.7784013, -81.1679712],
+                ['McKechnie Foods', 42.7725336, -80.985402],
+                ['Kitchener Market', 43.4483143, -80.4838562],
+                ['The Sustainable Market & Brookfront Farms', 43.3439132, -80.5702921],
+                ['Grainharvest Breadhouse Inc', 43.4607534, -80.4411428],
+                ["Liiman's Mercado Mexicano", 43.7321143, -80.9525422],
+                ['Small Scale Farms', 43.0797812, -79.1913592],
+                ['Pedros Mart Inc.', 42.7933814, -80.7488122],
+                ['Countryside Farmers Market', 42.7098366, -80.7831338],
+                ["Pfenning's Organic & More", 43.4348862, -80.6305769],
+                ['Your Farm Market - Woodstock', 43.1298704, -80.7490697],
+                ['Howe Family Farm Market', 42.732415, -81.0078367],
+                ["Howe's Farm Market & Country Bakery", 42.816109, -81.1508494],
+                ['Wholesome Pickins Market and Bakery', 42.85658, -80.473802],
+                ['Busy Bee Gas & Convenience', 42.6664856, -80.5173644],
+                ['Your Farm Market - Woodstock', 43.1298704, -80.7490697],
+                ['Common Ground Market Farm and CSA', 42.7391011, -81.2248632],
+                ['Cider Keg Farm Market', 42.7479515, -80.324234],
+                ['Goodness Me!', 44.3401235, -79.681396],
+                ['Goodness Me! Natural Food Market', 43.4007829, -80.324169],
+                ['50 Pesos Kitchen & Food Truck', 43.3643471, -79.7825251],
+                ["Clyde's Country Market", 44.3317729, -80.6326335],
+                ['D & E Family Farm Market', 42.8394622, -80.7267913],
+                ['Woodstock Farmers Market', 43.134112, -80.7399128],
+                ['4life Natural Foods', 43.6546417, -79.4022207],
+                ['Market Fresh', 43.5447222, -80.2527778],
+                ['Fairground General Store', 42.6494168, -80.6597675],
+                ['Éowyns - The Littlest Ice Cream Shop', 44.1754827, -80.8180847],
+                ['Sunrise', 42.7669494, -80.9649427],
+                ['Pedros Mart Inc.', 43.5795255, -80.7238878],
+                ['La Tienda Mexican Grocer & Take-Out', 43.5624818, -80.9243699],
+                ['Fire Hall Market', 42.6659553, -81.2114107],
+                ['Fiddleheads Health And Nutrition', 43.4616787, -80.4702816],
+                ["Fresh From The Farm (Schmucker's)", 43.6933063, -79.3427747],
+                ['Western Fair District Market', 42.9909855, -81.2210078],
+                ["Guelph Farmers' Market", 43.542419, -80.24838],
+                ["Arnold's family farm", 42.916962, -81.3804399],
+                ["Studer's Variety", 42.7632145, -80.9836961],
+                ['Home Tyme Foodservices', 42.9792334, -81.2064287],
+                ['Turners Farm Market', 43.0853844, -80.9130398],
+                ['The Wild Hog Country Market', 43.3700962, -80.9107373],
+                ["Herrle's Country Farm Market", 43.4390917, -80.5987778],
+                ['Chary Picker Country Market', 43.0248855, -80.3267507],
+                ['Browndale Farm and Market', 43.2508659, -80.3948974],
+                ['The Peanut Mill Natural Foods Market', 43.1664366, -79.2395442],
+                ["Zehr's Country Market", 43.5693855, -80.8347566],
+                ['Burkes Produce Market', 42.715235, -81.1917172],
+                ['Inside U Wellness', 43.1175116, -80.7343515],
+                ['Inside U Wellness', 42.9881058, -80.5973859],
+                ['HB Market', 42.7725841, -80.9880811],
+                ['Hope Eco-Farm Store', 42.8106205, -80.9107318],
+                ['Fenwood Farm', 43.1327778, -80.0075],
+                ['Wild Meadows Farm', 44.2385036, -80.8011634],
+                ['Granite Ridge Country Market', 46.413149, -80.1280282],
+                ["Nature's Emporium", 43.6414077, -79.3800441],
+                ["Nature's Emporium", 43.8072477, -79.550507],
+                ["Nature's Emporium", 43.8520745, -79.5215318],
+                ["Nature's Emporium", 44.0351733, -79.47249],
+                ["Nature's Emporium", 43.4484645, -79.7004581],
+                ["Nature's Emporium", 43.3879182, -79.7950079],
+                ['Amaranth Whole Foods Market - Arbour Lake Market', 51.1337507, -114.2040985],
+                ['Amaranth Foods - Southland Market', 50.96305, -114.0853216],
+                ['Amaranth Foods - Enjoy Centre Market', 53.6119652, -113.6476635],
+                ['Amaranth Health - Supplement Boutique', 50.9322303, -113.9600111],
+                ["Vincenzo's", 43.4593318, -80.5192966],
+                ['Okotoks Natural Foods', 50.7186825, -113.9832222],
+                ['Community Natural Foods', 50.8794303, -113.9525225],
+                ['Community Natural Foods', 51.0444868, -114.0915155],
+                ['Community Natural Foods', 51.1266402, -114.2072277],
+                ['Community Natural Foods', 50.9984275, -114.0662141],
+                ['Community Natural Foods', 53.5155091, -113.496509],
+                ['J & P Variety 2', 43.1242716, -80.7411318],
+                ['BELMONT DAIRY STORE', 42.8843077, -81.088034],
+                ['Maple View Variety', 42.867777, -80.7219615],
+                ['Kimberley General Store', 44.3839844, -80.5363182],
+                ['Grassroots Wood Fired Pizza', 43.9420355, -81.4654301],
+                ['Coastal Coffee', 44.0002039, -81.6713259],
+                ['Maitland Market and Supply', 43.710719, -81.661857],
+                ['The Healthy Lifestyle Store', 42.9895828, -81.0651949],
+                ['Farm Fresh Country Market', 43.2100226, -79.6823028],
+                ['The Windmill Country Market', 43.0778965, -80.3138351],
+                ['The Country Table', 42.87824, -80.7434318]
+            ];
+
+            var map = L.map(mapEl, {
+                scrollWheelZoom: false,
+                touchZoom: true,
+                dragging: true
+            });
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            var bounds = [];
+            pins.forEach(function (p) {
+                var marker = L.marker([p[1], p[2]]).addTo(map);
+                marker.bindPopup('<strong>' + p[0] + '</strong>');
+                bounds.push([p[1], p[2]]);
+            });
+
+            if (bounds.length) {
+                map.fitBounds(bounds, { padding: [10, 10] });
+            } else {
+                map.setView([43.4, -98], 4);
+            }
+
+            // Recompute size once the layout/scroll-reveal animation settles.
+            setTimeout(function () { map.invalidateSize(); }, 400);
         });
     </script>
 
