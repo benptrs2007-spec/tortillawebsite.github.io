@@ -177,6 +177,11 @@
             .map-container { height: 500px; }
         }
 
+        @media (max-width: 480px) {
+            .map-container { height: 420px; padding: 14px; }
+            .map-container iframe { border-radius: 12px; }
+        }
+
         
         
         
@@ -567,6 +572,30 @@
 
         .search-btn:active {
             transform: scale(0.98);
+        }
+
+        /* Mobile: stack the search input and "Find Stores" button so the button never gets squished */
+        @media (max-width: 600px) {
+            .search-container { margin: 30px auto 25px; }
+            .search-box {
+                flex-wrap: wrap;
+                gap: 8px;
+                border-radius: 24px;
+                padding: 12px;
+            }
+            .search-box input {
+                flex: 1 1 100%;
+                min-width: 0;
+                padding: 10px 8px;
+                font-size: 1rem;
+            }
+            .search-btn {
+                flex: 1 1 100%;
+                width: 100%;
+                padding: 14px 18px;
+                font-size: 1rem;
+                white-space: nowrap;
+            }
         }
 
         #nearby-results {
