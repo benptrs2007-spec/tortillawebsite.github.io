@@ -1227,7 +1227,7 @@
                 }
             }
 
-            function findClosestStores(userLat, userLng) {
+            function findClosestStores(userLat, userLng, scrollToResults) {
                 const allStores = [];
                 document.querySelectorAll('.store-item').forEach(item => {
                     const name = item.querySelector('.store-name').textContent;
@@ -1243,6 +1243,7 @@
                 allStores.sort((a, b) => a.distance - b.distance);
                 const topStores = allStores.slice(0, 6); // Show top 6 closest
 
+                resultsSection.style.display = 'block';
                 resultsGrid.innerHTML = '';
                 topStores.forEach(store => {
                     store.element.classList.remove('reveal');
@@ -1259,9 +1260,15 @@
                     resultsGrid.innerHTML = '<div class="no-results">No stores found near this location.</div>';
                 }
                 
-                // Scroll to results
-                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Scroll to results (skipped when geolocation fires on page load so
+                // the map stays in view with the "you are here" marker)
+                if (scrollToResults !== false) {
+                    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
+
+            // Expose to the map script so geolocation can populate "Closest to you"
+            window.findClosestStores = findClosestStores;
 
             function filterStoresByText(query) {
                 const matches = [];
@@ -1423,6 +1430,39 @@
 
             // Recompute size once the layout/scroll-reveal animation settles.
             setTimeout(function () { map.invalidateSize(); }, 400);
+
+            // On first visit, ask for the visitor's location so the map can show
+            // their position and the closest stores appear below.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (pos) {
+                    var lat = pos.coords.latitude;
+                    var lng = pos.coords.longitude;
+
+                    // "You are here" marker
+                    L.circleMarker([lat, lng], {
+                        radius: 9,
+                        color: '#2d2a26',
+                        weight: 3,
+                        fillColor: '#7d6e53',
+                        fillOpacity: 0.85
+                    }).addTo(map).bindPopup('<strong>You are here</strong>');
+
+                    // Center the map on the visitor so nearby pins are visible.
+                    map.setView([lat, lng], 11);
+
+                    // Populate the "Closest to you" list without auto-scrolling.
+                    if (typeof window.findClosestStores === 'function') {
+                        window.findClosestStores(lat, lng, false);
+                    }
+                }, function (err) {
+                    // Denied or unavailable: keep the default map view and store list.
+                    if (window.console) console.log('Location unavailable:', err.message);
+                }, {
+                    enableHighAccuracy: false,
+                    timeout: 10000,
+                    maximumAge: 300000
+                });
+            }
         });
     </script>
 
