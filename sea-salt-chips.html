@@ -6,7 +6,7 @@
     <title>Sea Salt Tortilla Chips | J&D Peters</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="2Z48U82V2P5H2"></script>
     <style>
         :root {
@@ -508,6 +508,242 @@
             transform: translateY(0);
         }
     
+    
+        /* ===== Rustic Theme Layer (v1) ===== */
+        :root {
+            --rustic-timber: #43382c;
+            --rustic-bark: #5d4c37;
+            --rustic-crust: #a3875e;
+            --rustic-wheat: #cbb593;
+            --rustic-cream: #f5eee0;
+            --rustic-linen: #faf6ec;
+            --rustic-leaf: #6b7f59;
+        }
+
+        /* --- Warm bread-crust background with subtle paper grain --- */
+        body {
+            background: #f6f1e5;
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+                radial-gradient(circle at top, #f9f4e8 0%, #ede4d0 70%, #e6dac2 100%);
+            background-attachment: fixed;
+        }
+
+        /* --- Timber-brown palette over the glass cards --- */
+        .promo-banner {
+            background: linear-gradient(90deg, #43382c, #5d4c37 50%, #43382c);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass-nav-wrapper,
+        .hero-content,
+        .story-section > div,
+        .spotlight-card,
+        .contact-box,
+        .product-card,
+        .product-image-wrapper,
+        .search-box,
+        .footer {
+            background: rgba(250, 246, 236, 0.72) !important;
+            border: 1px solid rgba(163, 135, 94, 0.32) !important;
+            box-shadow: 0 2px 5px rgba(67, 56, 44, 0.06), 0 10px 28px rgba(67, 56, 44, 0.08) !important;
+        }
+
+        .glass-nav-wrapper {
+            border: 1px solid rgba(163, 135, 94, 0.4) !important;
+            box-shadow: 0 1px 2px rgba(67, 56, 44, 0.06), 0 14px 30px rgba(67, 56, 44, 0.1) !important;
+        }
+
+        .story-section > div,
+        .spotlight-card,
+        .product-image-wrapper {
+            border-radius: 6px !important;
+        }
+
+        /* --- Fraunces "old-world print" headings --- */
+        h1, h2, h3,
+        .product-title,
+        .page-title,
+        .section-title,
+        .shop-title,
+        .contact-title,
+        .region-header,
+        .footer-column h3 {
+            font-family: 'Fraunces', 'Playfair Display', serif !important;
+            color: var(--rustic-timber) !important;
+        }
+
+        h1, .page-title, .shop-title, .contact-title,
+        .product-info h1 {
+            font-weight: 600 !important;
+        }
+
+        h2, .section-title, .spotlight-text h2 {
+            font-weight: 500 !important;
+        }
+
+        h3, .product-title, .footer-column h3 {
+            font-weight: 500 !important;
+            letter-spacing: 0.01em;
+        }
+
+        .cursive {
+            color: #8a6d45 !important;
+        }
+
+        /* --- Buttons: wheat-and-timber "rubber stamp" style --- */
+        .btn,
+        .btn-details,
+        .btn-submit,
+        .add-to-cart-form button[type="submit"] {
+            background: var(--rustic-timber) !important;
+            border: 1px solid #362e24 !important;
+            border-radius: 8px !important;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 6px rgba(67, 56, 44, 0.25) !important;
+            letter-spacing: 0.06em;
+        }
+
+        .btn:hover,
+        .btn-details:hover,
+        .btn-submit:hover,
+        .add-to-cart-form button[type="submit"]:hover {
+            background: #362e24 !important;
+            transform: translateY(-2px);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 6px 16px rgba(67, 56, 44, 0.35) !important;
+        }
+
+        .btn-secondary {
+            background: rgba(250, 246, 236, 0.85) !important;
+            color: var(--rustic-timber) !important;
+            border: 1px solid rgba(93, 76, 55, 0.45) !important;
+            border-radius: 8px !important;
+            box-shadow: 0 2px 6px rgba(67, 56, 44, 0.1) !important;
+        }
+
+        .btn-secondary:hover {
+            background: #f5eee0 !important;
+            border-color: var(--rustic-bark) !important;
+        }
+
+        .btn-details {
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .badge {
+            background-color: var(--rustic-leaf) !important;
+            border: 1px solid #58684a;
+            box-shadow: 0 2px 8px rgba(77, 92, 66, 0.3) !important;
+        }
+
+        /* --- Nav: sturdy hand-lettered links --- */
+        .nav-links a {
+            font-family: 'Fraunces', serif !important;
+            font-weight: 500 !important;
+            letter-spacing: 1.2px;
+        }
+
+        .nav-links a::after {
+            background-color: #8a6d45 !important;
+            height: 2px;
+        }
+
+        .dropdown-menu {
+            background: rgba(250, 246, 236, 0.97) !important;
+            border: 1px solid rgba(163, 135, 94, 0.35);
+        }
+
+        .dropdown-menu li a {
+            font-family: 'Fraunces', serif !important;
+        }
+
+        /* --- Footer: dark walnut base --- */
+        footer {
+            background: linear-gradient(180deg, #4b3e30 0%, #43382c 100%) !important;
+            border-top: 3px solid var(--rustic-crust) !important;
+            color: #e9e0cf !important;
+        }
+
+        footer, footer * {
+            color: #e9e0cf;
+        }
+
+        .footer-column h3 {
+            color: var(--rustic-cream) !important;
+        }
+
+        .footer-column ul li a,
+        .social-links a,
+        footer p {
+            color: #cfc2aa !important;
+        }
+
+        .footer-column ul li a:hover,
+        .social-links a:hover {
+            color: var(--rustic-cream) !important;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(235, 224, 204, 0.18) !important;
+            color: #a8987d !important;
+        }
+
+        .footer-logo {
+            filter: brightness(0) invert(1);
+        }
+
+        /* --- Rustic scrollbar --- */
+        ::-webkit-scrollbar-track {
+            background: #efe7d6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b09668;
+            border-radius: 5px;
+            border: 2px solid #efe7d6;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8a6d45;
+        }
+
+        /* --- Form fields: typed-on-paper feel --- */
+        .form-group input,
+        .form-group textarea {
+            background: rgba(255, 255, 255, 0.75) !important;
+            border: 1px solid rgba(93, 76, 55, 0.3) !important;
+            border-radius: 6px !important;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--rustic-bark) !important;
+            box-shadow: 0 0 0 3px rgba(163, 135, 94, 0.18) !important;
+        }
+
+        /* --- Store list & price accents --- */
+        .store-item {
+            background: rgba(255, 252, 245, 0.6) !important;
+            border: 1px solid rgba(163, 135, 94, 0.28) !important;
+            border-radius: 6px !important;
+        }
+
+        .store-item:hover {
+            border-color: var(--rustic-bark) !important;
+        }
+
+        .price {
+            color: #8a6d45 !important;
+        }
+
+        .promo-banner span {
+            color: #e6dac2 !important;
+        }
+
+        /* --- Mobile: identical theme, no layout overrides --- */
+        @media (max-width: 900px) {
+            body {
+                background-attachment: scroll;
+            }
+        }
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
