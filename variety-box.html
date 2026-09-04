@@ -742,6 +742,202 @@
                 background-attachment: scroll;
             }
         }
+    
+        /* ===== Mobile Refinement Layer (v2 — applies below 900px only) ===== */
+        @media (max-width: 900px) {
+
+            /* --- 1. Slim marquee sale banner (68px -> 28px, full message preserved) --- */
+            .promo-banner {
+                height: 28px !important;
+                padding: 0 !important;
+                font-size: 0 !important; /* hides the original text nodes */
+                letter-spacing: 0 !important;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+                border-bottom: 1px solid rgba(203, 181, 147, 0.28) !important;
+            }
+
+            .promo-banner span {
+                font-size: 0 !important;
+                margin-left: 0 !important;
+            }
+
+            .promo-banner::before {
+                content: "SALE! 20% OFF ALL LUKE'S CHIPS \2022 FREE SHIPPING CANADA WIDE \2022 SALE! 20% OFF ALL LUKE'S CHIPS \2022 FREE SHIPPING CANADA WIDE \2022";
+                flex: 0 0 auto;
+                width: max-content;
+                font-family: 'Inter', sans-serif !important;
+                font-size: 0.66rem !important;
+                font-weight: 600;
+                letter-spacing: 1.5px;
+                color: #f0e7d2;
+                animation: bannerTicker 24s linear infinite;
+                will-change: transform;
+            }
+
+            @keyframes bannerTicker {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .promo-banner::before {
+                    animation: none;
+                    width: 100%;
+                    text-align: center;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            /* --- 2. Reclaim vertical space lost to the old banner + tall header --- */
+            header {
+                top: 28px !important;
+                padding: 0 12px !important;
+            }
+
+            .container,
+            .hero,
+            .map-hero,
+            .contact-container,
+            .page-container,
+            .shop-container,
+            .product-detail-container {
+                padding-top: 112px !important;
+            }
+
+            /* --- 3. Refined header: single-row pill, logo centered, flanked by cart + menu --- */
+            .glass-nav-wrapper {
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 9px 54px !important;
+                border-radius: 14px !important;
+                min-height: 0 !important;
+            }
+
+            .logo-container {
+                width: auto !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+
+            .logo-container img {
+                height: 42px !important;
+                max-width: min(46vw, 210px) !important;
+                object-fit: contain;
+            }
+
+            .nav-inner {
+                border-top: none !important;
+                padding-top: 0 !important;
+            }
+
+            .hamburger {
+                right: 7px !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                padding: 11px 9px !important;
+            }
+
+            .hamburger span {
+                width: 22px !important;
+                height: 2.4px !important;
+                background: var(--rustic-timber, #43382c) !important;
+                border-radius: 2px;
+            }
+
+            /* Burger morphs into an X while the menu is open (progressive enhancement) */
+            .glass-nav-wrapper:has(.nav-links.active) .hamburger span:nth-child(1) {
+                transform: translateY(7.4px) rotate(45deg);
+            }
+
+            .glass-nav-wrapper:has(.nav-links.active) .hamburger span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .glass-nav-wrapper:has(.nav-links.active) .hamburger span:nth-child(3) {
+                transform: translateY(-7.4px) rotate(-45deg);
+            }
+
+            paypal-cart-button[data-id="pp-view-cart"] {
+                left: 7px !important;
+                top: 50% !important;
+                transform: translateY(-50%) scale(0.85) !important;
+                transform-origin: left center;
+            }
+
+            /* --- 4. Refined mobile menu panel: linen card with dashed dividers --- */
+            .nav-links {
+                background: rgba(250, 246, 236, 0.98) !important;
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border: 1px solid rgba(163, 135, 94, 0.38) !important;
+                border-radius: 14px !important;
+                padding: 6px 14px !important;
+                gap: 0 !important;
+                margin-top: 12px !important;
+                box-shadow: 0 18px 40px rgba(67, 56, 44, 0.18) !important;
+                max-height: calc(100dvh - 130px);
+                overflow-y: auto;
+            }
+
+            .nav-links li {
+                width: 100%;
+                border-bottom: 1px dashed rgba(163, 135, 94, 0.32);
+                padding: 0;
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                font-size: 0.82rem !important;
+                letter-spacing: 1.6px !important;
+                padding: 12px 4px;
+                display: block;
+            }
+
+            .nav-links a::after {
+                display: none;
+            }
+
+            .dropdown-menu {
+                margin: 0 0 8px !important;
+            }
+
+            .dropdown-menu li {
+                border-bottom: 1px dashed rgba(163, 135, 94, 0.22);
+            }
+
+            .dropdown-menu li:last-child {
+                border-bottom: none;
+            }
+
+            .dropdown-menu li a {
+                font-size: 0.72rem !important;
+                letter-spacing: 1px !important;
+                color: #7d6e53;
+                padding: 9px 4px 9px 14px;
+            }
+
+            /* --- 5. Small-screen safety (320-360px devices) --- */
+            @media (max-width: 360px) {
+                .glass-nav-wrapper {
+                    padding: 8px 50px !important;
+                }
+
+                .logo-container img {
+                    height: 38px !important;
+                    max-width: 42vw !important;
+                }
+            }
+        }
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
