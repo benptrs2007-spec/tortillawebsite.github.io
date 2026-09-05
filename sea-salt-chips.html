@@ -994,6 +994,56 @@
         }
     }
 
+    
+    /* === Collapsible Nutritional Info === */
+    .ingredients-box .nutri-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+        margin: -4px 0;
+        padding: 4px 0;
+        border: none;
+        background: none;
+        font: inherit;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+    }
+    .ingredients-box .nutri-toggle h4 {
+        margin: 0;
+    }
+    .nutri-chevron {
+        flex: 0 0 auto;
+        width: 0;
+        height: 0;
+        border-left: 5px solid currentColor;
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+        transition: transform 0.25s ease;
+    }
+    .ingredients-box.nutri-open .nutri-chevron {
+        transform: rotate(90deg);
+    }
+    .ingredients-box .nutri-body {
+        margin-top: 8px;
+        animation: nutri-expand 0.25s ease;
+    }
+    @keyframes nutri-expand {
+        from { opacity: 0; transform: translateY(-4px); }
+        to { opacity: 1; transform: none; }
+    }
+    @media (max-width: 900px) {
+        .ingredients-box .nutri-toggle {
+            margin: -6px 0;
+            padding: 6px 0;
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .ingredients-box .nutri-body { animation: none; }
+    }
+
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
@@ -1043,9 +1093,25 @@
         <div class="product-image-wrapper">
             <img src="sea-salt-chip.webp" alt="Sea Salt Tortilla Chips">
             <div class="ingredients-box" style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--glass-border); text-align: left; font-size: 0.85rem; color: var(--accent-dark); line-height: 1.4;">
-                <h4 style="margin-bottom: 8px; font-family: 'Inter', sans-serif;">Nutritional Info</h4>
+                <h4 style="margin: 0; font-family: 'Inter', sans-serif;"><button type="button" class="nutri-toggle" aria-expanded="false" aria-controls="nutri-body">Nutritional Info<span class="nutri-chevron" aria-hidden="true"></span></button></h4>
+                <div class="nutri-body" id="nutri-body" hidden>
                 <strong>INGREDIENTS:</strong> STONE GROUND NON-GMO CORN, SUNFLOWER OIL, SEA SALT, CALCIUM HYDROXIDE.
+                </div>
             </div>
+            <script>
+                (function () {
+                    var box = document.querySelector('.ingredients-box');
+                    var btn = box && box.querySelector('.nutri-toggle');
+                    var body = box && box.querySelector('.nutri-body');
+                    if (!btn || !body) return;
+                    btn.addEventListener('click', function () {
+                        var willOpen = body.hidden;
+                        body.hidden = !willOpen;
+                        btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+                        box.classList.toggle('nutri-open', willOpen);
+                    });
+                })();
+            </script>
 
         </div>
         <div class="product-info">
