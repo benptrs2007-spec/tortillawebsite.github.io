@@ -982,12 +982,112 @@
                 }
             }
         }
+    
+    /* === Summer Shutdown Announcement Bar === */
+    .announcement-bar {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #3e2a17 0%, #5a3d22 100%);
+        color: #f6ecd9;
+        text-align: center;
+        padding: 9px 44px 9px 14px;
+        font-size: 0.85rem;
+        line-height: 1.45;
+        letter-spacing: 0.02em;
+        border-bottom: 1px solid rgba(246, 236, 217, 0.18);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        animation: announcement-slide-in 0.5s ease-out both;
+    }
+    .announcement-bar strong {
+        font-weight: 600;
+        color: #ffd98a;
+    }
+    .announcement-bar .announcement-close {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        transform: translateY(-50%);
+        width: 26px;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 1px solid rgba(246, 236, 217, 0.45);
+        border-radius: 50%;
+        background: transparent;
+        color: #f6ecd9;
+        font-size: 0.9rem;
+        line-height: 1;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+    .announcement-bar .announcement-close:hover {
+        background: #f6ecd9;
+        color: #3e2a17;
+    }
+    .announcement-bar .announcement-close:active {
+        transform: translateY(-50%) scale(0.92);
+    }
+    .announcement-bar.closing {
+        animation: announcement-collapse 0.35s ease forwards;
+    }
+    @keyframes announcement-slide-in {
+        from { opacity: 0; transform: translateY(-12px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes announcement-collapse {
+        from { opacity: 1; max-height: 200px; }
+        to { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; }
+    }
+    @media (max-width: 900px) {
+        .announcement-bar {
+            font-size: 0.78rem;
+            padding: 8px 40px 8px 10px;
+        }
+        .announcement-bar .announcement-close {
+            width: 30px;
+            height: 30px;
+            right: 6px;
+            font-size: 1rem;
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .announcement-bar { animation: none; }
+        .announcement-bar.closing { animation: none; transition: opacity 0.2s ease; }
+    }
+
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+
+    <div class="announcement-bar" id="shutdown-announcement" role="status">
+        Due to summer shutdown, all chip orders placed will be shipped after <strong>September 21st</strong>.
+        <button type="button" class="announcement-close" aria-label="Dismiss announcement">✕</button>
+    </div>
+    <script>
+        (function () {
+            var bar = document.getElementById('shutdown-announcement');
+            if (!bar) return;
+            var KEY = 'jd-summershutdown-dismissed';
+            try {
+                if (localStorage.getItem(KEY)) {
+                    bar.style.display = 'none';
+                    return;
+                }
+            } catch (e) { /* storage unavailable - keep showing */ }
+            var btn = bar.querySelector('.announcement-close');
+            if (!btn) return;
+            btn.addEventListener('click', function () {
+                try { localStorage.setItem(KEY, '1'); } catch (e) {}
+                bar.classList.add('closing');
+                setTimeout(function () { bar.style.display = 'none'; }, 360);
+            });
+        })();
+    </script>
     <div class="promo-banner">
         SALE! 20% OFF ALL LUKE'S CHIPS — <span>FREE SHIPPING CANADA WIDE ONLY</span>
     </div>
