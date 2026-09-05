@@ -965,6 +965,35 @@
                 }
             }
         }
+    
+    /* === Chip Summer Shutdown Notice === */
+    .chip-notice {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        margin: -4px 0 18px;
+        color: #b3261e;
+        font-size: 0.9rem;
+        font-weight: 600;
+        line-height: 1.45;
+        text-align: left;
+    }
+    .chip-notice::before {
+        content: "";
+        flex: 0 0 8px;
+        width: 8px;
+        height: 8px;
+        margin-top: 0.42em;
+        border-radius: 50%;
+        background: #b3261e;
+        box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.14);
+    }
+    @media (max-width: 900px) {
+        .chip-notice {
+            font-size: 0.85rem;
+        }
+    }
+
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
@@ -1021,6 +1050,7 @@
         </div>
         <div class="product-info">
             <h1>Sea Salt <span class="cursive">Tortilla Chips</span></h1>
+            <p class="chip-notice">Chip orders placed today will be shipped after September 21st due to our Summer shutdown.</p>
             <p class="description">Experience the unmistakable crunch and quality of J&D Peters Sea Salt Tortilla Chips. Perfectly seasoned with coarse sea salt, these classic chips let the rich, authentic flavor of our locally-grown, stone-ground corn shine through every bite. No artificial flavors, just simple, recognizable ingredients.</p>
             <div class="add-to-cart-container">
                 <paypal-add-to-cart-button data-id="GUYQTJ94KJ6SG"></paypal-add-to-cart-button>
