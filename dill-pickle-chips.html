@@ -1044,6 +1044,33 @@
         .ingredients-box .nutri-body { animation: none; }
     }
 
+    
+    /* === Mobile Product Layout: Title Above Photo === */
+    @media (max-width: 900px) {
+        .product-detail-container {
+            gap: 0;
+        }
+        .product-info {
+            display: contents;
+        }
+        .product-info h1 {
+            order: -3;
+            margin-bottom: 10px;
+        }
+        .product-info .chip-notice {
+            order: -2;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .product-image-wrapper {
+            order: -1;
+            margin-bottom: 40px;
+        }
+        .product-info .add-to-cart-container {
+            margin-top: 0;
+        }
+    }
+
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
