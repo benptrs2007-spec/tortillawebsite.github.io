@@ -989,6 +989,10 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
+
+                .nav-links.active {
+                    animation: none;
+                }
             }
 
             /* --- 2. Reclaim vertical space lost to the old banner + tall header --- */
@@ -1009,6 +1013,7 @@
 
             /* --- 3. Refined header: single-row pill, logo centered, flanked by cart + menu --- */
             .glass-nav-wrapper {
+                position: relative !important;
                 flex-direction: row !important;
                 align-items: center !important;
                 justify-content: center !important;
@@ -1026,7 +1031,7 @@
             }
 
             .logo-container img {
-                height: 42px !important;
+                height: 48px !important;
                 max-width: min(46vw, 210px) !important;
                 object-fit: contain;
             }
@@ -1034,6 +1039,8 @@
             .nav-inner {
                 border-top: none !important;
                 padding-top: 0 !important;
+                width: 0 !important;
+                min-width: 0 !important;
             }
 
             .hamburger {
@@ -1050,16 +1057,16 @@
                 border-radius: 2px;
             }
 
-            /* Burger morphs into an X while the menu is open (progressive enhancement) */
-            .glass-nav-wrapper:has(.nav-links.active) .hamburger span:nth-child(1) {
+            /* Burger morphs into an X while the menu is open */
+            .hamburger.menu-open span:nth-child(1) {
                 transform: translateY(7.4px) rotate(45deg);
             }
 
-            .glass-nav-wrapper:has(.nav-links.active) .hamburger span:nth-child(2) {
+            .hamburger.menu-open span:nth-child(2) {
                 opacity: 0;
             }
 
-            .glass-nav-wrapper:has(.nav-links.active) .hamburger span:nth-child(3) {
+            .hamburger.menu-open span:nth-child(3) {
                 transform: translateY(-7.4px) rotate(-45deg);
             }
 
@@ -1072,6 +1079,12 @@
 
             /* --- 4. Refined mobile menu panel: linen card with dashed dividers --- */
             .nav-links {
+                position: absolute !important;
+                top: calc(100% + 14px) !important;
+                left: 12px !important;
+                right: 12px !important;
+                margin-top: 0 !important;
+                z-index: 1002 !important;
                 background: rgba(250, 246, 236, 0.98) !important;
                 backdrop-filter: blur(14px);
                 -webkit-backdrop-filter: blur(14px);
@@ -1079,10 +1092,19 @@
                 border-radius: 14px !important;
                 padding: 6px 14px !important;
                 gap: 0 !important;
-                margin-top: 12px !important;
                 box-shadow: 0 18px 40px rgba(67, 56, 44, 0.18) !important;
                 max-height: calc(100dvh - 130px);
                 overflow-y: auto;
+            }
+
+            .nav-links.active {
+                display: flex !important;
+                animation: mobileMenuDrop 0.18s ease-out;
+            }
+
+            @keyframes mobileMenuDrop {
+                from { opacity: 0; transform: translateY(-6px); }
+                to { opacity: 1; transform: translateY(0); }
             }
 
             .nav-links li {
@@ -1132,7 +1154,7 @@
                 }
 
                 .logo-container img {
-                    height: 38px !important;
+                    height: 44px !important;
                     max-width: 42vw !important;
                 }
             }
@@ -1403,7 +1425,8 @@
             
             if (hamburger && navLinks) {
                 hamburger.addEventListener('click', function() {
-                    navLinks.classList.toggle('active');
+                    const isOpen = navLinks.classList.toggle('active');
+                    this.classList.toggle('menu-open', isOpen);
                 });
             }
             
