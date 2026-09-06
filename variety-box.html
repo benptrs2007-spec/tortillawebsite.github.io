@@ -1085,6 +1085,26 @@
                 <script>
                   cartPaypal.AddToCart({ id: "FE2E6FW6FES9U" })
                 </script>
+                <script>
+                    (function () {
+                        function hideDupProductLabel() {
+                            var h1 = document.querySelector('.product-info h1');
+                            if (!h1) return;
+                            var name = h1.textContent.trim().toLowerCase();
+                            if (!name) return;
+                            document.querySelectorAll('paypal-add-to-cart-button label.input-label').forEach(function (lbl) {
+                                var t = (lbl.textContent || '').trim().toLowerCase();
+                                if (t && t !== 'quantity' && t.indexOf(name) !== -1) {
+                                    lbl.style.display = 'none';
+                                }
+                            });
+                        }
+                        hideDupProductLabel();
+                        if (window.MutationObserver) {
+                            new MutationObserver(hideDupProductLabel).observe(document.body, { childList: true, subtree: true });
+                        }
+                    })();
+                </script>
             </div>
         </div>
     </section>
